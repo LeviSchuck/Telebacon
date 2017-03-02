@@ -1,4 +1,5 @@
 defmodule Telebacon.Data.API.KickChatMember do
+  @moduledoc "Represents call params for method /kickChatMember"
   @derive [Poison.Encoder]
   defstruct [
     :chat_id,

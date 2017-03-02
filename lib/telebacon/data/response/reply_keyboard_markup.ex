@@ -1,4 +1,5 @@
 defmodule Telebacon.Data.Response.ReplyKeyboardMarkup do
+  @moduledoc "Messaging command parameters to specify how a keyboard should be displayed"
   @derive [Poison.Encoder]
   defstruct [
     :keyboard,

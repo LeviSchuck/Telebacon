@@ -1,4 +1,5 @@
 defmodule Telebacon.Data.Response.SendPhoto do
+  @moduledoc "Messaging command parameters to send a photo"
   @derive [Poison.Encoder]
   defstruct [
     :chat_id,
@@ -6,8 +7,9 @@ defmodule Telebacon.Data.Response.SendPhoto do
     :caption,
     :disable_notification,
     :reply_to_message_id,
-    :reply_markup 
+    :reply_markup
   ]
+
   @type t :: %Telebacon.Data.Response.SendPhoto{
     chat_id: integer | String.t,
     photo: String.t | binary,

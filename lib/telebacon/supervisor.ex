@@ -4,10 +4,13 @@ defmodule Telebacon.Supervisor do
   """
   require Logger
   use Supervisor
+
+  @lint false
   def start_link do
     Supervisor.start_link(__MODULE__, [])
   end
 
+  @lint false
   def init([]) do
     Logger.debug "Supervising Telebacon"
     children = [

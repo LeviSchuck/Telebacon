@@ -1,4 +1,5 @@
 defmodule Telebacon.Data.Response.KeyboardButton do
+  @moduledoc "Messaging command parameters for a single keyboard button"
   @derive [Poison.Encoder]
   defstruct [
     :text,

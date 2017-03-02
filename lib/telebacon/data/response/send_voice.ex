@@ -1,4 +1,5 @@
 defmodule Telebacon.Data.Response.SendVoice do
+  @moduledoc "Messaging command parameters to send an voice message"
   @derive [Poison.Encoder]
   defstruct [
     :chat_id,

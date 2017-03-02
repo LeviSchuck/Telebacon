@@ -1,4 +1,5 @@
 defmodule Telebacon.Data.Response.EditMessageText do
+  @moduledoc "Messaging command parameters to edit text of an existing message"
   @derive [Poison.Encoder]
   defstruct [
     :chat_id,

@@ -1,4 +1,5 @@
 defmodule Telebacon.Data.Response.EditMessageReplyMarkup do
+  @moduledoc "Messaging command parameters to edit markup type on a message"
   @derive [Poison.Encoder]
   defstruct [
     :chat_id,

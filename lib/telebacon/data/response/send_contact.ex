@@ -1,4 +1,5 @@
 defmodule Telebacon.Data.Response.SendContact do
+  @moduledoc "Messaging command parameters to send a contact"
   @derive [Poison.Encoder]
   defstruct [
     :chat_id,

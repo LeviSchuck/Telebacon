@@ -1,4 +1,5 @@
 defmodule Telebacon.Data.Response.SendVenue do
+  @moduledoc "Messaging command parameters to send a venue"
   @derive [Poison.Encoder]
   defstruct [
     :chat_id,

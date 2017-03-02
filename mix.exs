@@ -34,7 +34,9 @@ defmodule Telebacon.Mixfile do
     [{:httpoison, "~> 0.11.0"},
      {:poison, "~> 3.1"},
      {:gproc, "~> 0.5"},
-     {:dialyxir, "~> 0.5", only: [:dev], runtime: false}
+     {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
+     {:credo, "~> 0.5", only: [:dev, :test]},
+     {:ex_doc, "~> 0.14", only: :dev}
     ]
   end
 end

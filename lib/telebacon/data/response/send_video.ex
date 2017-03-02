@@ -1,4 +1,5 @@
 defmodule Telebacon.Data.Response.SendVideo do
+  @moduledoc "Messaging command parameters to send an video message"
   @derive [Poison.Encoder]
   defstruct [
     :chat_id,

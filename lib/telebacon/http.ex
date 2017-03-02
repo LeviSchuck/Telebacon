@@ -7,13 +7,18 @@ defmodule Telebacon.HTTP do
 
   @headers [{"Content-Type", "application/json"}]
 
+  @spec process_url(binary) :: binary
   def process_url(endpoint) do
     "https://api.telegram.org/" <> endpoint
   end
+
+  @spec get_updates(binary, integer | nil, integer | nil, integer | nil)
+    :: {:ok, [%{}]}
+    | {:failure, %{}}
   def get_updates(key, offset, limit, timeout) do
     params = %{offset: offset, limit: limit, timeout: timeout}
     payload = Poison.encode!(params)
-    {:ok, response} = Telebacon.HTTP.post(key <> "/getUpdates", payload, @headers)
+    {:ok, response} = post(key <> "/getUpdates", payload, @headers)
     res = Poison.decode!(response.body)
     case Map.get(res, "ok", false) do
       true -> {:ok, Map.get(res, "result")}
@@ -21,16 +26,18 @@ defmodule Telebacon.HTTP do
     end
   end
 
-  def send_message(key, user, text, options) do
-    params = Map.merge(options, %{chat_id: user, text: text})
+  @spec send_message(binary, String.t | integer, binary, %{})
+    :: :ok
+    | {:failure, %{}}
+  def send_message(key, chat_id, text, options) do
+    params = Map.merge(options, %{chat_id: chat_id, text: text})
     payload = Poison.encode!(params)
-    {:ok, response} = Telebacon.HTTP.post(key <> "/sendMessage", payload, @headers)
+    {:ok, response} = post(key <> "/sendMessage", payload, @headers)
     res = Poison.decode!(response.body)
     case Map.get(res, "ok", false) do
       true -> :ok
       _ -> {:failure, res}
     end
   end
-
 
 end

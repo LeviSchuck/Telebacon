@@ -1,4 +1,5 @@
 defmodule Telebacon.Data.API.GetUserProfilePhotos do
+  @moduledoc "Represents call params for method /getUserProfilePhotos"
   @derive [Poison.Encoder]
   defstruct [
     :user_id,

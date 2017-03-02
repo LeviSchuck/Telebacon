@@ -1,4 +1,5 @@
 defmodule Telebacon.Data.API.GetChatAdministrators do
+  @moduledoc "Represents call params for method /getChatAdministrators"
   @derive [Poison.Encoder]
   defstruct [
     :chat_id

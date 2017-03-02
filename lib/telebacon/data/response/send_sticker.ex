@@ -1,4 +1,5 @@
 defmodule Telebacon.Data.Response.SendSticker do
+  @moduledoc "Messaging command parameters to send a sticker"
   @derive [Poison.Encoder]
   defstruct [
     :chat_id,

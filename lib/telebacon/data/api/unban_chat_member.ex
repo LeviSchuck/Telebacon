@@ -1,4 +1,5 @@
 defmodule Telebacon.Data.API.UnbanChatMember do
+  @moduledoc "Represents call params for method /unbanChatMember"
   @derive [Poison.Encoder]
   defstruct [
     :chat_id,

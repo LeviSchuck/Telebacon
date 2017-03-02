@@ -1,4 +1,6 @@
 defmodule Telebacon.Data.API.File do
+  @moduledoc "File data type for Telegram"
+  alias Poison.Decode, as: PD
   @derive [Poison.Encoder]
   defstruct [
     :file_id,
@@ -10,4 +12,10 @@ defmodule Telebacon.Data.API.File do
     file_size: integer | nil,
     file_path: String.t | nil
   }
+
+  @spec fromMap(%{}) :: %Telebacon.Data.API.File{}
+  def fromMap(map) do
+    val = PD.decode(map, as: %Telebacon.Data.API.File{})
+    val
+  end
 end

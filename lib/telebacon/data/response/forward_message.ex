@@ -1,4 +1,5 @@
 defmodule Telebacon.Data.Response.ForwardMessage do
+  @moduledoc "Messaging command parameters to forward a message"
   @derive [Poison.Encoder]
   defstruct [
     :chat_id,

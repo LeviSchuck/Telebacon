@@ -1,4 +1,5 @@
 defmodule Telebacon.Data.Response.SendLocation do
+  @moduledoc "Messaging command parameters to send a location"
   @derive [Poison.Encoder]
   defstruct [
     :chat_id,

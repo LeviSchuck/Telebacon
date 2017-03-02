@@ -1,5 +1,8 @@
 defmodule Telebacon.Data.API.Chat do
+  @moduledoc "Chat data type for Telegram"
   @derive [Poison.Encoder]
+  alias Poison.Decode, as: PD
+  alias Telebacon.Data.API.Chat, as: Chat
   defstruct [
     :id,
     :type,
@@ -9,7 +12,7 @@ defmodule Telebacon.Data.API.Chat do
     :last_name,
     :all_members_are_administrators
   ]
-  @type t :: %Telebacon.Data.API.Chat{
+  @type t :: %Chat{
     id: integer,
     type: String.t,
     title: String.t | nil,
@@ -18,4 +21,10 @@ defmodule Telebacon.Data.API.Chat do
     last_name: String.t | nil,
     all_members_are_administrators: boolean | nil
   }
+
+  @spec fromMap(%{}) :: %Chat{}
+  def fromMap(map) do
+    val = PD.decode(map, as: %Chat{})
+    val
+  end
 end

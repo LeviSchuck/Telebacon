@@ -1,4 +1,5 @@
 defmodule Telebacon.Data.Updates.GetUpdates do
+  @moduledoc "Represents call params for method /getUpdates"
   @derive [Poison.Encoder]
   defstruct [
     :offset,

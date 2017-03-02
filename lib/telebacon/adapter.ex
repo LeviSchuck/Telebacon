@@ -1,19 +1,19 @@
 defmodule Telebacon.Adapter do
+  @moduledoc "Adapter behaviour for a stateless bot"
   @type message :: Telebacon.Data.API.Message
-  @type send_message :: Telebacon.Data.Response.SendMessage
-  @type send_forward :: Telebacon.Data.Response.ForwardMessage
-  @type send_photo :: Telebacon.Data.Response.SendPhoto
-  @type send_audio :: Telebacon.Data.Response.SendAudio
-  @type send_video :: Telebacon.Data.Response.SendVideo
-  @type send_document :: Telebacon.Data.Response.SendDocument
-  @type send_sticker :: Telebacon.Data.Response.SendSticker
-  @type send_voice :: Telebacon.Data.Response.SendVoice
-  @type send_location :: Telebacon.Data.Response.SendLocation
-  @type send_venue :: Telebacon.Data.Response.SendVenue
-  @type send_contact :: Telebacon.Data.Response.SendContact
-  @type send_chat_action :: Telebacon.Data.Response.SendChatAction
 
-  @type rep :: send_message | send_forward | send_photo | send_audio | send_video | send_document | send_sticker | send_voice | send_location | send_venue | send_contact | send_chat_action
+  @type rep :: %Telebacon.Data.Response.SendMessage{}
+    | %Telebacon.Data.Response.ForwardMessage{}
+    | %Telebacon.Data.Response.SendPhoto{}
+    | %Telebacon.Data.Response.SendAudio{}
+    | %Telebacon.Data.Response.SendVideo{}
+    | %Telebacon.Data.Response.SendDocument{}
+    | %Telebacon.Data.Response.SendSticker{}
+    | %Telebacon.Data.Response.SendVoice{}
+    | %Telebacon.Data.Response.SendLocation{}
+    | %Telebacon.Data.Response.SendVenue{}
+    | %Telebacon.Data.Response.SendContact{}
+    | %Telebacon.Data.Response.SendChatAction{}
   @type reply :: {:reply, [rep]}
 
   @type state :: any

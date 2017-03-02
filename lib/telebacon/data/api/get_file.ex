@@ -1,4 +1,5 @@
 defmodule Telebacon.Data.API.GetFile do
+  @moduledoc "Represents call params for method /getFile"
   @derive [Poison.Encoder]
   defstruct [
     :file_id
