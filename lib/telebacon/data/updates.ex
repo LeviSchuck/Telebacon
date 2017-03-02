@@ -11,6 +11,15 @@ defmodule Telebacon.Data.Updates do
       :chosen_inline_result,
       :callback_query
     ]
+    @type t :: %Update{
+      update_id: integer,
+      message: %Telebacon.Data.API.Message{} | nil,
+      edited_message: %Telebacon.Data.API.Message{} | nil,
+      channel_post: %Telebacon.Data.API.Message{} | nil,
+      inline_query: %{} | nil,
+      chosen_inline_result: %{} | nil,
+      callback_query: %{} | nil
+    }
   end
   defmodule GetUpdates do
     @derive [Poison.Encoder]
@@ -20,5 +29,11 @@ defmodule Telebacon.Data.Updates do
       :timeout,
       :allowed_updates
     ]
+    @type t :: %GetUpdates{
+      offset: integer | nil,
+      limit: integer | nil,
+      timeout: integer | nil,
+      allowed_updates: integer | nil
+    }
   end
 end
