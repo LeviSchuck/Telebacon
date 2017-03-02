@@ -1,0 +1,9 @@
+defmodule Telebacon.Data.API.GetFile do
+  @derive [Poison.Encoder]
+  defstruct [
+    :file_id
+  ]
+  @type t :: %Telebacon.Data.API.GetFile{
+    file_id: String.t
+  }
+end
