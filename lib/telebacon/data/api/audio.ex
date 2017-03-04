@@ -25,4 +25,6 @@ defmodule Telebacon.Data.API.Audio do
     val = PD.decode(map, as: %Audio{})
     val
   end
+
+  use Telebacon.Data.Inspect
 end

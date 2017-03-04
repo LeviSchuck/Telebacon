@@ -21,4 +21,6 @@ defmodule Telebacon.Data.API.User do
     val = PD.decode(map, as: %User{})
     val
   end
+
+  use Telebacon.Data.Inspect
 end

@@ -27,4 +27,6 @@ defmodule Telebacon.Data.API.Chat do
     val = PD.decode(map, as: %Chat{})
     val
   end
+
+  use Telebacon.Data.Inspect
 end

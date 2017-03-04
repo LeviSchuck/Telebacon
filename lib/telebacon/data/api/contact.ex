@@ -21,4 +21,6 @@ defmodule Telebacon.Data.API.Contact do
     val = PD.decode(map, as: %Contact{})
     val
   end
+
+  use Telebacon.Data.Inspect
 end

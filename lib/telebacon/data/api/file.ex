@@ -18,4 +18,6 @@ defmodule Telebacon.Data.API.File do
     val = PD.decode(map, as: %Telebacon.Data.API.File{})
     val
   end
+
+  use Telebacon.Data.Inspect
 end

@@ -25,4 +25,6 @@ defmodule Telebacon.Data.API.Venue do
       |> H.fromMap(:location, Location)
     full_val
   end
+
+  use Telebacon.Data.Inspect
 end

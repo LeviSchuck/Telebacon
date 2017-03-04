@@ -36,4 +36,6 @@ defmodule Telebacon.Data.Updates.Update do
       |> H.fromMap(:edited_channel_post, Message)
     full_val
   end
+
+  use Telebacon.Data.Inspect
 end

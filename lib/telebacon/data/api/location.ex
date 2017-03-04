@@ -16,4 +16,6 @@ defmodule Telebacon.Data.API.Location do
     val = PD.decode(map, as: %Telebacon.Data.API.Location{})
     val
   end
+
+  use Telebacon.Data.Inspect
 end

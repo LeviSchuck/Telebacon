@@ -20,4 +20,6 @@ defmodule Telebacon.Data.API.Voice do
     val = PD.decode(map, as: %Voice{})
     val
   end
+
+  use Telebacon.Data.Inspect
 end

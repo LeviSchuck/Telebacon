@@ -109,4 +109,6 @@ defmodule Telebacon.Data.API.Message do
       |> H.fromMap(:venue, Venue)
     full_val
   end
+
+  use Telebacon.Data.Inspect
 end

@@ -1,6 +1,6 @@
 defmodule Telebacon.HTTP do
   @moduledoc """
-  Hosts the basic http calls
+  Hosts the basic http calls, works with things that can be encoded.
   """
   use HTTPoison.Base
   require Logger
@@ -12,32 +12,24 @@ defmodule Telebacon.HTTP do
     "https://api.telegram.org/" <> endpoint
   end
 
-  @spec get_updates(binary, integer | nil, integer | nil, integer | nil)
-    :: {:ok, [%{}]}
+  @spec call(binary, binary, %{} | struct)
+    :: {:ok, any}
     | {:failure, %{}}
-  def get_updates(key, offset, limit, timeout) do
-    params = %{offset: offset, limit: limit, timeout: timeout}
-    payload = Poison.encode!(params)
-    {:ok, response} = post(key <> "/getUpdates", payload, @headers)
+  def call(key, method, params) do
+    map_params = case Map.get(params, :__struct__) do
+      nil -> params
+      _ -> Map.from_struct(params)
+    end
+    filtered_params = map_params
+      |> Enum.filter(fn {_, v} -> not is_nil(v) end)
+      |> Enum.into(%{})
+    Logger.debug (inspect filtered_params)
+    payload = Poison.encode!(filtered_params)
+    {:ok, response} = post(key <> "/" <> method, payload, @headers)
     res = Poison.decode!(response.body)
     case Map.get(res, "ok", false) do
-      true -> {:ok, Map.get(res, "result")}
+      true -> {:ok, res}
       _ -> {:failure, res}
     end
   end
-
-  @spec send_message(binary, String.t | integer, binary, %{})
-    :: :ok
-    | {:failure, %{}}
-  def send_message(key, chat_id, text, options) do
-    params = Map.merge(options, %{chat_id: chat_id, text: text})
-    payload = Poison.encode!(params)
-    {:ok, response} = post(key <> "/sendMessage", payload, @headers)
-    res = Poison.decode!(response.body)
-    case Map.get(res, "ok", false) do
-      true -> :ok
-      _ -> {:failure, res}
-    end
-  end
-
 end

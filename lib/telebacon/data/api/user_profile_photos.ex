@@ -19,4 +19,6 @@ defmodule Telebacon.Data.API.UserProfilePhotos do
       |> H.fromMapList(:photos, Telebacon.Data.API.PhotoSize)
     full_val
   end
+
+  use Telebacon.Data.Inspect
 end

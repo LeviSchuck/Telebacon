@@ -27,4 +27,6 @@ defmodule Telebacon.Data.API.Document do
       |> H.fromMap(:thumb, PhotoSize)
     full_val
   end
+
+  use Telebacon.Data.Inspect
 end

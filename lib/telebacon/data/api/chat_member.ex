@@ -21,4 +21,6 @@ defmodule Telebacon.Data.API.ChatMember do
       |> H.fromMap(:user, User)
     full_val
   end
+
+  use Telebacon.Data.Inspect
 end

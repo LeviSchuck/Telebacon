@@ -21,4 +21,6 @@ defmodule Telebacon.Data.API.PhotoSize do
     val = PD.decode(map, as: %PhotoSize{})
     val
   end
+
+  use Telebacon.Data.Inspect
 end

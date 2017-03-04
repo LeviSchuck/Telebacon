@@ -17,4 +17,6 @@ defmodule Telebacon.Data.API.ResponseParameters do
     val = PD.decode(map, as: %RP{})
     val
   end
+
+  use Telebacon.Data.Inspect
 end
