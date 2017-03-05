@@ -16,10 +16,11 @@ defmodule Telebacon.Data.Helper do
   def fromMapList(struct, key, ty) do
     struct = case Map.get(struct, key) do
       nil -> struct
-      list -> Enum.map(list, fn val ->
-        pval = apply(ty, :fromMap, [val])
-        %{struct | key => pval}
-      end)
+      list ->
+        plist = list |> Enum.map(fn val ->
+          apply(ty, :fromMap, [val])
+        end)
+        %{struct | key => plist}
     end
     struct
   end

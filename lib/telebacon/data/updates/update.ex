@@ -27,7 +27,7 @@ defmodule Telebacon.Data.Updates.Update do
   }
 
   @spec fromMap(%{}) :: %Update{}
-  def fromMap(map) do
+  def fromMap(map) when is_map(map) do
     val = PD.decode(map, as: %Update{})
     full_val = val
       |> H.fromMap(:message, Message)
