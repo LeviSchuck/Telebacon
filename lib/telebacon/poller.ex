@@ -28,7 +28,7 @@ defmodule Telebacon.Poller do
     {:ok, {state, key, inst, 0}}
   end
 
-  @spec handle_cast(:poll, {any, binary, atom, integer}) :: tuple
+  @spec handle_cast(:poll, {any, binary, atom, integer}) :: {:noreply, tuple}
   def handle_cast(:poll, {state, key, inst, offset}) do
     params = %RQ.GetUpdates{
       offset: offset + 1,
@@ -39,13 +39,13 @@ defmodule Telebacon.Poller do
     noffset = handle_response(ty, response, {state, key, inst, offset})
     {:noreply, {state, key, inst, noffset}}
   end
-  defp handle_response(:failure, response, {_, _, _, offset}) do
-    Logger.debug "Got error? #{inspect response}"
+  defp handle_response(:failure, _, {_, _, _, offset}) do
+    # Logger.debug "Got error? #{inspect response}"
     GenServer.cast(self(), :poll)
     offset
   end
-  defp handle_response(:ok, response, {state, key, inst, noffset}) do
-    Logger.debug "Got response #{inspect response}"
+  defp handle_response(:ok, response, {state, key, inst, offset}) do
+    # Logger.debug "Got response #{inspect response}"
     _ = response |> Enum.filter(fn update ->
       update.update_id > offset
     end) |> Enum.map(fn update ->
@@ -53,7 +53,7 @@ defmodule Telebacon.Poller do
     end) |> Enum.map(&Task.await(&1))
     GenServer.cast(self(), :poll)
     noffset = Enum.reduce(response, offset, &max(&1.update_id, &2))
-    Logger.debug "Next Offset: #{noffset}"
+    # Logger.debug "Next Offset: #{noffset}"
     noffset
   end
 end
