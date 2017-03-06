@@ -1,13 +1,10 @@
 defmodule Telebacon.SimpleAPI do
+  @moduledoc """
+  Simple API is just a macro meant for private use in Telebacon.API.
+  It wraps up Telegram result handling and encoding
+  """
   alias Telebacon.HTTP, as: HTTP
-  defp api_name([first | rest]) do
-    snake_rest = Enum.join(rest, "_")
-    camel = Macro.camelize(snake_rest)
-    lower = Atom.to_string(first)
-    fun_name = Enum.join([first, snake_rest],"_")
-    api_call = lower <> camel
-    {fun_name, api_call}
-  end
+  @lint false
   defmacro call(name, out_ty) do
     {fun_name, api} = api_name(name)
     rep = quote do
@@ -21,6 +18,7 @@ defmodule Telebacon.SimpleAPI do
     end
     rep
   end
+  @lint false
   defmacro call(name, in_ty, out_ty) do
     {fun_name, api} = api_name(name)
     rep = quote do
@@ -34,6 +32,16 @@ defmodule Telebacon.SimpleAPI do
     end
     rep
   end
+
+  defp api_name([first | rest]) do
+    snake_rest = Enum.join(rest, "_")
+    camel = Macro.camelize(snake_rest)
+    lower = Atom.to_string(first)
+    fun_name = Enum.join([first, snake_rest],"_")
+    api_call = lower <> camel
+    {fun_name, api_call}
+  end
+
   defp out_ty_fun(:bool) do
     quote do
       boolean
@@ -59,6 +67,7 @@ defmodule Telebacon.SimpleAPI do
       %unquote(ty){}
     end
   end
+
   defp parse_fun(:bool) do
     quote do
       fn x -> x end

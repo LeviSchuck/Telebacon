@@ -1,8 +1,8 @@
-defmodule Telebacon.Data.Updates.Update do
+defmodule Telebacon.Data.API.Update do
   @moduledoc "Response for call /getUpdates"
   alias Telebacon.Data.Helper, as: H
   alias Poison.Decode, as: PD
-  alias Telebacon.Data.Updates.Update, as: Update
+  alias Telebacon.Data.API.Update, as: Update
   alias Telebacon.Data.API.Message, as: Message
   @derive [Poison.Encoder]
   defstruct [

@@ -1,4 +1,4 @@
-defmodule Telebacon.Data.Updates.GetUpdates do
+defmodule Telebacon.Data.Request.GetUpdates do
   @moduledoc "Represents call params for method /getUpdates"
   @derive [Poison.Encoder]
   defstruct [
@@ -7,7 +7,7 @@ defmodule Telebacon.Data.Updates.GetUpdates do
     :timeout,
     :allowed_updates
   ]
-  @type t :: %Telebacon.Data.Updates.GetUpdates{
+  @type t :: %Telebacon.Data.Request.GetUpdates{
     offset: integer | nil,
     limit: integer | nil,
     timeout: integer | nil,
