@@ -7,7 +7,7 @@ defmodule Telebacon.Application do
 
   @lint false
   def start(_type, _args) do
-    Logger.debug "Starting Telebacon"
+    # Logger.debug "Starting Telebacon"
     Telebacon.Supervisor.start_link()
   end
 end

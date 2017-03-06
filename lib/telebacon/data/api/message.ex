@@ -61,7 +61,7 @@ defmodule Telebacon.Data.API.Message do
     forward_date: integer | nil,
     reply_to_message: %Message{} | nil,
     edit_date: integer | nil,
-    text: String.t,
+    text: String.t | nil,
     entities: [%MessageEntity{}] | nil,
     audio: %Audio{} | nil,
     document: %Document{} | nil,

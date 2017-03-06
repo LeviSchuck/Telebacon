@@ -4,7 +4,6 @@ defmodule Telebacon.SimpleAPI do
   It wraps up Telegram result handling and encoding
   """
   alias Telebacon.HTTP, as: HTTP
-  @lint false
   defmacro call(name, out_ty) do
     {fun_name, api} = api_name(name)
     rep = quote do

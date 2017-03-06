@@ -15,12 +15,20 @@ defmodule Telebacon.API do
   # Telegram API
   Simple.call [:get, :updates], RQ.GetUpdates, [A.Update]
   Simple.call [:get, :me], A.User
-  Simple.call [:get, :user, :profile, :photos], RQ.GetUserProfilePhotos, A.UserProfilePhotos
   Simple.call [:get, :file], RQ.GetFile, A.File
   Simple.call [:get, :chat], RQ.GetChat, A.Chat
-  Simple.call [:get, :chat, :administrators], RQ.GetChatAdministrators, [A.ChatMember]
-  Simple.call [:get, :chat, :members, :count], RQ.GetChatMembersCount, :integer
-  Simple.call [:get, :chat, :member], RQ.GetChatMember, A.ChatMember
+  Simple.call [:get, :user, :profile, :photos],
+    RQ.GetUserProfilePhotos,
+    A.UserProfilePhotos
+  Simple.call [:get, :chat, :administrators],
+    RQ.GetChatAdministrators,
+    [A.ChatMember]
+  Simple.call [:get, :chat, :members, :count],
+    RQ.GetChatMembersCount,
+    :integer
+  Simple.call [:get, :chat, :member],
+    RQ.GetChatMember,
+    A.ChatMember
 
   Simple.call [:send, :message], RS.SendMessage, A.Message
   Simple.call [:forward, :message], RS.ForwardMessage, A.Message

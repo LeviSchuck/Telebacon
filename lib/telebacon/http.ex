@@ -5,7 +5,15 @@ defmodule Telebacon.HTTP do
   use HTTPoison.Base
   require Logger
 
-  @headers [{"Content-Type", "application/json"}]
+  @headers [
+    {"Content-Type", "application/json"}
+  ]
+  @big_timeout 1_000_000
+  @options [
+    connect_timeout: @big_timeout,
+    recv_timeout: @big_timeout,
+    timeout: @big_timeout
+  ]
 
   @spec process_url(binary) :: binary
   def process_url(endpoint) do
@@ -29,11 +37,16 @@ defmodule Telebacon.HTTP do
         json
       nil -> "{}"
     end
-    {:ok, response} = post(key <> "/" <> method, payload, @headers)
-    res = Poison.decode!(response.body)
-    case Map.get(res, "ok", false) do
-      true -> {:ok, res}
-      _ -> {:failure, res}
+    url = key <> "/" <> method
+    {ty, response} = post(url, payload, @headers, @options)
+    case ty do
+      :ok ->
+        res = Poison.decode!(response.body)
+        case Map.get(res, "ok", false) do
+          true -> {:ok, res}
+          _ -> {:failure, res}
+        end
+      :error -> {:failure, response}
     end
   end
 end
