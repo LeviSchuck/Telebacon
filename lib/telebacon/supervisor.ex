@@ -5,7 +5,6 @@ defmodule Telebacon.Supervisor do
   require Logger
   use Supervisor
 
-  @lint false
   def start_link do
     name = {:via, :gproc, {:n, :l, {:telebacon, :poll_supervisor}}}
     Supervisor.start_link(__MODULE__, [], name: name)
@@ -16,7 +15,6 @@ defmodule Telebacon.Supervisor do
     :gproc.whereis_name({:n, :l, {:telebacon, :poll_supervisor}})
   end
 
-  @lint false
   def init([]) do
     # Logger.debug "Supervising Telebacon"
     children = [

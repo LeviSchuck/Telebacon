@@ -20,6 +20,41 @@ defmodule Telebacon.HTTP do
     "https://api.telegram.org/" <> endpoint
   end
 
+  @spec download_url(binary, binary) :: {:ok, File.io_device, binary}
+  def download_url(url, name) do
+    {:ok, fd, file_path} = Temp.open(Path.basename(name))
+    async_get(url, fd, file_path)
+  end
+
+  defp async_get(url, fd, file_path) do
+    try do
+      {:ok, prev} = get(url, [], [async: :once, stream_to: self()])
+      :ok = collect_download(prev, :ok, fd)
+      {:ok, fd, file_path}
+    rescue
+      err ->
+        File.close(fd)
+        Logger.warn "Got error during download: #{inspect err}"
+        {:err, err}
+    end
+  end
+
+  defp collect_download(prev, status, fd) do
+    {:ok, stat} = stream_next(prev)
+    receive do
+      %HTTPoison.AsyncChunk{chunk: chunk} ->
+        IO.binwrite(fd, chunk)
+        collect_download(stat, status, fd)
+      %HTTPoison.AsyncEnd{} -> status
+      %HTTPoison.AsyncHeaders{} ->
+        collect_download(stat, status, fd)
+      %HTTPoison.AsyncStatus{code: 200} ->
+        collect_download(stat, status, fd)
+      %HTTPoison.AsyncStatus{code: code} ->
+        collect_download(stat, {:bad_status, code}, fd)
+    end
+  end
+
   @spec call(binary, binary, %{} | struct | nil)
     :: {:ok, any}
     | {:failure, %{}}

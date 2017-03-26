@@ -17,7 +17,7 @@ defmodule Telebacon.SimpleAPI do
     end
     rep
   end
-  @lint false
+
   defmacro call(name, in_ty, out_ty) do
     {fun_name, api} = api_name(name)
     rep = quote do

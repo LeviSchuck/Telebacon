@@ -36,7 +36,8 @@ defmodule Telebacon.Mixfile do
      {:gproc, "~> 0.5"},
      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
      {:credo, "~> 0.5", only: [:dev, :test]},
-     {:ex_doc, "~> 0.14", only: :dev}
+     {:ex_doc, "~> 0.14", only: :dev},
+     {:temp, "~> 0.4"}
     ]
   end
 end

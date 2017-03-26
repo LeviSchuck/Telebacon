@@ -5,7 +5,6 @@ defmodule Telebacon.Application do
   require Logger
   use Application
 
-  @lint false
   def start(_type, _args) do
     # Logger.debug "Starting Telebacon"
     Telebacon.Supervisor.start_link()

@@ -4,12 +4,12 @@ defmodule Telebacon.API do
   """
   require Telebacon.SimpleAPI
   require Logger
+  alias Telebacon.HTTP
   alias Telebacon.SimpleAPI, as: Simple
   alias Telebacon.Data.API, as: A
   alias Telebacon.Data.Request, as: RQ
   alias Telebacon.Data.Response, as: RS
 
-  @lint false
   def get_updates(key), do: get_updates(key, %{})
 
   # Telegram API
@@ -45,6 +45,15 @@ defmodule Telebacon.API do
   Simple.call [:unban, :chat, :member], RQ.UnbanChatMember, :bool
   Simple.call [:kick, :chat, :member], RQ.KickChatMember, :bool
   Simple.call [:leave, :chat], RQ.LeaveChat, :bool
+
+  @spec download_file(binary, binary) :: binary
+  def download_file(key, file_path) do
+    url = "file/" <> key <> "/" <> file_path
+    Logger.info "Download url: #{url}"
+    {:ok, fd, save_path} = HTTP.download_url(url, file_path)
+    File.close(fd)
+    save_path
+  end
 
   # Private
   defp handleResult(:ok, response, parsefn) do
