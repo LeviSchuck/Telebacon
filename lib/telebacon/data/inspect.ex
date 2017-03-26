@@ -2,7 +2,7 @@ defmodule Telebacon.Data.Inspect do
   @moduledoc """
   Replacement inspection for telegram data, hides all the nil values.
   """
-  @lint false
+
   defmacro __using__(_) do
     quote do
       defimpl Inspect, for: __MODULE__ do
