@@ -1,7 +1,6 @@
 defmodule Telebacon.Data.API.PhotoSize do
   @moduledoc "Photo Size data type for Telegram, primarily for photos, also includes dimensions."
   alias Poison.Decode, as: PD
-  alias Telebacon.Data.API.PhotoSize, as: PhotoSize
   @derive [Poison.Encoder]
   defstruct [
     :file_id,
@@ -9,16 +8,16 @@ defmodule Telebacon.Data.API.PhotoSize do
     :height,
     :file_size
   ]
-  @type t :: %PhotoSize{
+  @type t :: %__MODULE__{
     file_id: String.t,
     width: integer,
     height: integer,
     file_size: integer | nil
   }
 
-  @spec fromMap(%{}) :: %PhotoSize{}
-  def fromMap(map) do
-    val = PD.decode(map, as: %PhotoSize{})
+  @spec from_map(%{}) :: t
+  def from_map(map) do
+    val = PD.decode(map, as: %__MODULE__{})
     val
   end
 

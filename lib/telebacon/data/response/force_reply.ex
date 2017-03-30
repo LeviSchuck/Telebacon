@@ -5,7 +5,7 @@ defmodule Telebacon.Data.Response.ForceReply do
     :force_reply,
     :selective
   ]
-  @type t :: %Telebacon.Data.Response.ForceReply{
+  @type t :: %__MODULE__{
     force_reply: boolean,
     selective: boolean | nil
   }

@@ -6,14 +6,14 @@ defmodule Telebacon.Data.API.Location do
     :longitude,
     :latitude
   ]
-  @type t :: %Telebacon.Data.API.Location{
+  @type t :: %__MODULE__{
     longitude: float,
     latitude: float
   }
 
-  @spec fromMap(%{}) :: %Telebacon.Data.API.Location{}
-  def fromMap(map) do
-    val = PD.decode(map, as: %Telebacon.Data.API.Location{})
+  @spec from_map(%{}) :: t
+  def from_map(map) do
+    val = PD.decode(map, as: %__MODULE__{})
     val
   end
 

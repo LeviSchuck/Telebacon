@@ -4,7 +4,7 @@ defmodule Telebacon.Data.Request.GetFile do
   defstruct [
     :file_id
   ]
-  @type t :: %Telebacon.Data.Request.GetFile{
+  @type t :: %__MODULE__{
     file_id: String.t
   }
 end

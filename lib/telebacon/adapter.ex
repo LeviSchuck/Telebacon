@@ -1,7 +1,8 @@
 defmodule Telebacon.Adapter do
   @moduledoc "Adapter behaviour for a stateless bot"
-  @type state :: any
+  @type payload :: term
   @type key :: binary
   @type update :: %Telebacon.Data.API.Update{}
-  @callback chat_update(update, key, state) :: :ok
+  @type t :: {module, any}
+  @callback chat_update(key, update, payload) :: :ok
 end

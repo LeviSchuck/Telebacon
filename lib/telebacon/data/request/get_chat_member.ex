@@ -5,7 +5,7 @@ defmodule Telebacon.Data.Request.GetChatMember do
     :chat_id,
     :user_id
   ]
-  @type t :: %Telebacon.Data.Request.GetChatMember{
+  @type t :: %__MODULE__{
     chat_id: integer | String.t,
     user_id: integer
   }

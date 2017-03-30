@@ -4,7 +4,7 @@ defmodule Telebacon.Data.Request.GetChatAdministrators do
   defstruct [
     :chat_id
   ]
-  @type t :: %Telebacon.Data.Request.GetChatAdministrators{
+  @type t :: %__MODULE__{
     chat_id: integer | String.t
   }
 end

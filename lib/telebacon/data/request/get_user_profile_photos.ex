@@ -6,7 +6,7 @@ defmodule Telebacon.Data.Request.GetUserProfilePhotos do
     :offset,
     :limit
   ]
-  @type t :: %Telebacon.Data.Request.GetUserProfilePhotos{
+  @type t :: %__MODULE__{
     user_id: integer,
     offset: integer | nil,
     limit: integer | nil

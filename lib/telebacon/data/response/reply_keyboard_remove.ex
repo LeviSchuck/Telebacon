@@ -5,7 +5,7 @@ defmodule Telebacon.Data.Response.ReplyKeyboardRemove do
     :remove_keyboard,
     :selective
   ]
-  @type t :: %Telebacon.Data.Response.ReplyKeyboardRemove{
+  @type t :: %__MODULE__{
     remove_keyboard: boolean,
     selective: boolean | nil
   }

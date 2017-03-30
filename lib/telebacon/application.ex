@@ -1,7 +1,5 @@
 defmodule Telebacon.Application do
-  @moduledoc """
-  Telebacon is a telegram bot for elixir
-  """
+  @moduledoc false
   require Logger
   use Application
 

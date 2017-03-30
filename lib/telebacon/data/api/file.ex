@@ -7,15 +7,15 @@ defmodule Telebacon.Data.API.File do
     :file_size,
     :file_path
   ]
-  @type t :: %Telebacon.Data.API.File{
+  @type t :: %__MODULE__{
     file_id: String.t,
     file_size: integer | nil,
     file_path: String.t | nil
   }
 
-  @spec fromMap(%{}) :: %Telebacon.Data.API.File{}
-  def fromMap(map) do
-    val = PD.decode(map, as: %Telebacon.Data.API.File{})
+  @spec from_map(%{}) :: t
+  def from_map(map) do
+    val = PD.decode(map, as: %__MODULE__{})
     val
   end
 

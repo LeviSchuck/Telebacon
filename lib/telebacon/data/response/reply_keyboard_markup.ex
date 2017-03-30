@@ -7,8 +7,8 @@ defmodule Telebacon.Data.Response.ReplyKeyboardMarkup do
     :one_time_keyboard,
     :selective
   ]
-  @type t :: %Telebacon.Data.Response.ReplyKeyboardMarkup{
-    keyboard: [[%Telebacon.Data.Response.KeyboardButton{}]],
+  @type t :: %__MODULE__{
+    keyboard: [[Telebacon.Data.Response.KeyboardButton.t]],
     resize_keyboard: boolean | nil,
     one_time_keyboard: boolean | nil,
     selective: boolean | nil

@@ -1,7 +1,5 @@
 defmodule Telebacon.Supervisor do
-  @moduledoc """
-  Telebacon application supervisor
-  """
+  @moduledoc false
   require Logger
   use Supervisor
 
@@ -16,16 +14,15 @@ defmodule Telebacon.Supervisor do
   end
 
   def init([]) do
-    # Logger.debug "Supervising Telebacon"
     children = [
       worker(Telebacon.Poller, [], restart: :transient)
     ]
     supervise(children, strategy: :simple_one_for_one)
   end
 
-  @spec add_bot(pid, any, binary, atom) :: :ok
-  def add_bot(supervisor, state, key, inst) when is_pid(supervisor) do
-    Supervisor.start_child(supervisor, [state, key, inst])
-    :ok
+  @spec add_bot(pid, Telebacon.tel_key, Telebacon.Adapter.t, [Keyword.t])
+    :: Supervisor.start_child
+  def add_bot(supervisor, key, adapter, config) when is_pid(supervisor) do
+    Supervisor.start_child(supervisor, [key, adapter, config])
   end
 end

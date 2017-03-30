@@ -8,7 +8,7 @@ defmodule Telebacon.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps(),
-     dialyzer: [plt_add_apps: [:httpoison, :gproc, :poison],
+     dialyzer: [plt_add_apps: [:httpoison, :gproc, :poison, :temp],
              paths: ["_build/dev/lib/telebacon/ebin"]]
    ]
   end
@@ -34,10 +34,10 @@ defmodule Telebacon.Mixfile do
     [{:httpoison, "~> 0.11.0"},
      {:poison, "~> 3.1"},
      {:gproc, "~> 0.5"},
+     {:temp, "~> 0.4"},
      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
      {:credo, "~> 0.5", only: [:dev, :test]},
-     {:ex_doc, "~> 0.14", only: :dev},
-     {:temp, "~> 0.4"}
+     {:ex_doc, "~> 0.14", only: :dev}
     ]
   end
 end

@@ -2,7 +2,6 @@ defmodule Telebacon.Data.API.Audio do
   @moduledoc "Audio data type for Telegram"
   @derive [Poison.Encoder]
   alias Poison.Decode, as: PD
-  alias Telebacon.Data.API.Audio, as: Audio
   defstruct [
     :file_id,
     :duration,
@@ -11,7 +10,7 @@ defmodule Telebacon.Data.API.Audio do
     :mime_type,
     :file_size
   ]
-  @type t :: %Audio{
+  @type t :: %__MODULE__{
     file_id: String.t,
     duration: integer,
     performer: String.t | nil,
@@ -20,9 +19,9 @@ defmodule Telebacon.Data.API.Audio do
     file_size: integer | nil
   }
 
-  @spec fromMap(%{}) :: %Audio{}
-  def fromMap(map) do
-    val = PD.decode(map, as: %Audio{})
+  @spec from_map(%{}) :: t
+  def from_map(map) do
+    val = PD.decode(map, as: %__MODULE__{})
     val
   end
 

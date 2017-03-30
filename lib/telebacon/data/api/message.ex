@@ -2,18 +2,17 @@ defmodule Telebacon.Data.API.Message do
   @moduledoc "Message data type for Telegram"
   alias Poison.Decode, as: PD
   alias Telebacon.Data.Helper, as: H
-  alias Telebacon.Data.API.User, as: User
-  alias Telebacon.Data.API.Chat, as: Chat
-  alias Telebacon.Data.API.Audio, as: Audio
-  alias Telebacon.Data.API.Voice, as: Voice
-  alias Telebacon.Data.API.Video, as: Video
-  alias Telebacon.Data.API.Location, as: Location
-  alias Telebacon.Data.API.Document, as: Document
-  alias Telebacon.Data.API.Venue, as: Venue
-  alias Telebacon.Data.API.Sticker, as: Sticker
-  alias Telebacon.Data.API.Message, as: Message
-  alias Telebacon.Data.API.PhotoSize, as: PhotoSize
-  alias Telebacon.Data.API.MessageEntity, as: MessageEntity
+  alias Telebacon.Data.API.User
+  alias Telebacon.Data.API.Chat
+  alias Telebacon.Data.API.Audio
+  alias Telebacon.Data.API.Voice
+  alias Telebacon.Data.API.Video
+  alias Telebacon.Data.API.Location
+  alias Telebacon.Data.API.Document
+  alias Telebacon.Data.API.Venue
+  alias Telebacon.Data.API.Sticker
+  alias Telebacon.Data.API.PhotoSize
+  alias Telebacon.Data.API.MessageEntity
   @derive [Poison.Encoder]
   defstruct [
     :message_id,
@@ -50,31 +49,31 @@ defmodule Telebacon.Data.API.Message do
     :migrate_from_chat_id,
     :pinned_message
   ]
-  @type t :: %Message{
+  @type t :: %__MODULE__{
     message_id: integer,
-    from: %User{} | nil,
+    from: User.t | nil,
     date: integer,
-    chat: %Chat{},
-    forward_from: %User{} | nil,
-    forward_from_chat: %Chat{} | nil,
+    chat: Chat.t,
+    forward_from: User.t | nil,
+    forward_from_chat: Chat.t | nil,
     forward_from_message_id: integer | nil,
     forward_date: integer | nil,
-    reply_to_message: %Message{} | nil,
+    reply_to_message: t | nil,
     edit_date: integer | nil,
     text: String.t | nil,
-    entities: [%MessageEntity{}] | nil,
-    audio: %Audio{} | nil,
-    document: %Document{} | nil,
+    entities: [MessageEntity.t] | nil,
+    audio: Audio.t | nil,
+    document: Document.t | nil,
     game: %{} | nil,
-    photo: [%PhotoSize{}] | nil,
-    sticker: %Sticker{} | nil,
-    video: %Video{} | nil,
-    voice: %Voice{} | nil,
+    photo: [PhotoSize.t] | nil,
+    sticker: Sticker.t | nil,
+    video: Video.t | nil,
+    voice: Voice.t | nil,
     caption: String.t | nil,
-    location: %Location{} | nil,
-    venue: %Venue{} | nil,
-    new_chat_member: %User{} | nil,
-    left_chat_member: %User{} | nil,
+    location: Location.t | nil,
+    venue: Venue.t | nil,
+    new_chat_member: User.t | nil,
+    left_chat_member: User.t | nil,
     new_chat_title: String.t | nil,
     new_chat_photo: [] | nil,
     delete_chat_photo: boolean | nil,
@@ -83,30 +82,30 @@ defmodule Telebacon.Data.API.Message do
     channel_chat_created: boolean | nil,
     migrate_to_chat_id: integer | nil,
     migrate_from_chat_id: integer | nil,
-    pinned_message: %Message{} | nil
+    pinned_message: t | nil
   }
 
-  @spec fromMap(%{}) :: %Message{}
-  def fromMap(map) do
-    val = PD.decode(map, as: %Message{})
+  @spec from_map(%{}) :: t
+  def from_map(map) do
+    val = PD.decode(map, as: %__MODULE__{})
     full_val = val
-      |> H.fromMap(:reply_to_message, Message)
-      |> H.fromMap(:pinned_message, Message)
-      |> H.fromMap(:from, User)
-      |> H.fromMap(:forward_from, User)
-      |> H.fromMap(:new_chat_member, User)
-      |> H.fromMap(:left_chat_member, User)
-      |> H.fromMap(:chat, Chat)
-      |> H.fromMap(:forward_from_chat, Chat)
-      |> H.fromMapList(:entities, MessageEntity)
-      |> H.fromMap(:audio, Audio)
-      |> H.fromMap(:document, Document)
-      |> H.fromMapList(:photo, PhotoSize)
-      |> H.fromMap(:sticker, Sticker)
-      |> H.fromMap(:video, Video)
-      |> H.fromMap(:voice, Voice)
-      |> H.fromMap(:location, Location)
-      |> H.fromMap(:venue, Venue)
+      |> H.from_map(:reply_to_message, Message)
+      |> H.from_map(:pinned_message, Message)
+      |> H.from_map(:from, User)
+      |> H.from_map(:forward_from, User)
+      |> H.from_map(:new_chat_member, User)
+      |> H.from_map(:left_chat_member, User)
+      |> H.from_map(:chat, Chat)
+      |> H.from_map(:forward_from_chat, Chat)
+      |> H.from_map_list(:entities, MessageEntity)
+      |> H.from_map(:audio, Audio)
+      |> H.from_map(:document, Document)
+      |> H.from_map_list(:photo, PhotoSize)
+      |> H.from_map(:sticker, Sticker)
+      |> H.from_map(:video, Video)
+      |> H.from_map(:voice, Voice)
+      |> H.from_map(:location, Location)
+      |> H.from_map(:venue, Venue)
     full_val
   end
 

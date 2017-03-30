@@ -5,7 +5,7 @@ defmodule Telebacon.Data.Request.UnbanChatMember do
     :chat_id,
     :user_id
   ]
-  @type t :: %Telebacon.Data.Request.UnbanChatMember{
+  @type t :: %__MODULE__{
     chat_id: integer | String.t,
     user_id: integer
   }

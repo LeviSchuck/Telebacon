@@ -18,7 +18,7 @@ defmodule Telebacon.Data.Response.SendChatAction do
     :chat_id,
     :action
   ]
-  @type t :: %Telebacon.Data.Response.SendChatAction{
+  @type t :: %__MODULE__{
     chat_id: integer | String.t,
     action: String.t
   }

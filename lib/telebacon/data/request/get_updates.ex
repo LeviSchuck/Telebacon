@@ -7,7 +7,7 @@ defmodule Telebacon.Data.Request.GetUpdates do
     :timeout,
     :allowed_updates
   ]
-  @type t :: %Telebacon.Data.Request.GetUpdates{
+  @type t :: %__MODULE__{
     offset: integer | nil,
     limit: integer | nil,
     timeout: integer | nil,

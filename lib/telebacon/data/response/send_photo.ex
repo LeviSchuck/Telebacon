@@ -10,16 +10,12 @@ defmodule Telebacon.Data.Response.SendPhoto do
     :reply_markup
   ]
 
-  @type t :: %Telebacon.Data.Response.SendPhoto{
+  @type t :: %__MODULE__{
     chat_id: integer | String.t,
     photo: String.t | binary,
     caption: String.t | nil,
     disable_notification: boolean | nil,
     reply_to_message_id: integer | nil,
-    reply_markup: %Telebacon.Data.Response.ReplyKeyboardMarkup{}
-      | %Telebacon.Data.Response.ReplyKeyboardRemove{}
-      | %Telebacon.Data.Response.ForceReply{}
-      | %{}
-      | nil
+    reply_markup: Telebacon.Data.Response.ReplyMarkup.t
   }
 end

@@ -7,7 +7,7 @@ defmodule Telebacon.Data.Response.ForwardMessage do
     :disable_notification,
     :message_id
   ]
-  @type t :: %Telebacon.Data.Response.ForwardMessage{
+  @type t :: %__MODULE__{
     chat_id: integer | String.t,
     from_chat_id: integer | String.t,
     disable_notification: boolean | nil,

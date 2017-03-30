@@ -1,7 +1,5 @@
 defmodule Telebacon.HTTP do
-  @moduledoc """
-  Hosts the basic http calls, works with things that can be encoded.
-  """
+  @moduledoc false
   use HTTPoison.Base
   require Logger
 
@@ -20,23 +18,34 @@ defmodule Telebacon.HTTP do
     "https://api.telegram.org/" <> endpoint
   end
 
-  @spec download_url(binary, binary) :: {:ok, File.io_device, binary}
+  @spec download_url(binary, Path.t)
+    :: {:ok, Path.t} | {:error, any}
   def download_url(url, name) do
-    {:ok, fd, file_path} = Temp.open(Path.basename(name))
-    async_get(url, fd, file_path)
+    case open_temp(name) do
+      {:ok, fd, file_path} ->
+        res = async_get(url, fd, file_path)
+        File.close(fd)
+        res
+      {:error, err} -> {:error, err}
+    end
   end
 
+  @spec open_temp(Path.t)
+    :: {:ok, File.io_device, Path.t} | {:error, any}
+  defp open_temp(name) do
+    Temp.open(Path.basename(name))
+  end
+
+  @spec async_get(binary, File.io_device, Path.t)
+    :: {:ok, Path.t} | {:error, any}
   defp async_get(url, fd, file_path) do
-    try do
-      {:ok, prev} = get(url, [], [async: :once, stream_to: self()])
-      :ok = collect_download(prev, :ok, fd)
-      {:ok, fd, file_path}
-    rescue
-      err ->
-        File.close(fd)
-        Logger.warn "Got error during download: #{inspect err}"
-        {:err, err}
-    end
+    {:ok, prev} = get(url, [], [async: :once, stream_to: self()])
+    :ok = collect_download(prev, :ok, fd)
+    {:ok, file_path}
+  rescue
+    err ->
+      Logger.warn "Got error during download: #{inspect err}"
+      {:error, err}
   end
 
   defp collect_download(prev, status, fd) do
