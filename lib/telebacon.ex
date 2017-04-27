@@ -6,6 +6,17 @@ defmodule Telebacon do
   To act on telegram messages, add a polling bot with the `Telegram.Adapter`
   behaviour.
 
+  Add the following to your supervision tree in order to
+  `worker(Telebacon.Poller, [key, adapter, config])`
+  where key is the telegram key like "bot1234:AAHCYnS...",
+  adapter is a tuple of the module and parameter, such as `{Telebacon.Demo, nil}`
+  finally config can have some additional polling information:
+  You can specify polling configuration such as:
+  * `:limit`: number of messages to retrieve at most at a time.
+    This is by default: 5
+  * `:timeout`: number in seconds to wait for a new message.
+    This is by default: 300 (5 minutes)
+
   Much of the API is exposed below with *snake_case* function mirroring
   documented camelCase API calls from Telegram.
   [https://core.telegram.org/bots/api]()
@@ -19,38 +30,6 @@ defmodule Telebacon do
   alias Telebacon.Data.Response, as: RS
 
   @type tel_key :: binary
-  @type config :: [Keyword.t]
-  @doc """
-  You can use managed polling as part of this library.
-
-  Another option is web hooks which this library does not cover.
-
-  To add a polling bot, you require a telegram key, such as:
-  `bot1234:AAHCYnS...`
-
-  To handle incomming messages and events, provide a adapter tuple of a
-  `Telebacon.Adapter` behaviour implemented module and payload.
-  For example: `{Telebacon.Demo, nil}`
-
-  You can specify polling configuration such as:
-  * `:limit`: number of messages to retrieve at most at a time.
-    This is by default: 5
-  * `:timeout`: number in seconds to wait for a new message.
-    This is by default: 300 (5 minutes)
-
-  ## Example
-      iex> add_bot("bot1234:AAHCYnS...", {Telebacon.Demo, nil}, timeout: 60)
-  """
-  @spec add_bot(tel_key, Telebacon.Adapter.t, config) :: :ok | {:error, term}
-  def add_bot(key, adapter, config \\ []) do
-    pid = Telebacon.Supervisor.whereis
-    res = Telebacon.Supervisor.add_bot(pid, key, adapter, config)
-    case res do
-      {:ok, _} -> :ok
-      {:ok, _, _} -> :ok
-      {:error, why} -> {:error, why}
-    end
-  end
 
   def get_updates(key), do: get_updates(key, %{})
 
@@ -235,10 +214,12 @@ defmodule Telebacon do
   the temp folder.
   It is up to you to clean up these files afterwards.
   ## Example
-      iex> file_id = List.last(message.photo).file_id
-      iex> {:ok, file_ref} = get_file(key, %{file_id: file_id})
-      iex> file_path = download_file(key, file_ref.file_path)
-      "/tmp/file_3.jpg-1490516347-22704-cqgwoh"
+  ```
+  > file_id = List.last(message.photo).file_id
+  > {:ok, file_ref} = get_file(key, %{file_id: file_id})
+  > file_path = download_file(key, file_ref.file_path)
+  "/tmp/file_3.jpg-1490516347-22704-cqgwoh"
+  ```
   """
   @spec download_file(tel_key, binary) :: binary
   def download_file(key, file_path) do

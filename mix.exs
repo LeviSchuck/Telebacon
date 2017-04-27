@@ -3,7 +3,7 @@ defmodule Telebacon.Mixfile do
 
   def project do
     [app: :telebacon,
-     version: "0.1.0",
+     version: "0.1.1",
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -17,8 +17,9 @@ defmodule Telebacon.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :httpoison, :gproc],
-     mod: {Telebacon.Application, []}]
+    [
+      applications: [:logger, :httpoison, :gproc],
+    ]
   end
 
   # Dependencies can be Hex packages:
