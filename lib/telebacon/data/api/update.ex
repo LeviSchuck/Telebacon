@@ -3,6 +3,7 @@ defmodule Telebacon.Data.API.Update do
   alias Telebacon.Data.Helper, as: H
   alias Poison.Decode, as: PD
   alias Telebacon.Data.API.Message
+  alias Telebacon.Data.API.CallbackQuery
   @derive [Poison.Encoder]
   defstruct [
     :update_id,
@@ -33,6 +34,7 @@ defmodule Telebacon.Data.API.Update do
       |> H.from_map(:edited_message, Message)
       |> H.from_map(:channel_post, Message)
       |> H.from_map(:edited_channel_post, Message)
+      |> H.from_map(:callback_query, CallbackQuery)
     full_val
   end
 
