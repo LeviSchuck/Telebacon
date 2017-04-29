@@ -200,6 +200,28 @@ defmodule Telebacon do
   Simple.call [:leave, :chat], RQ.LeaveChat, :bool
 
   @doc """
+  Use this method to edit text and game messages sent by the bot
+  or via the bot (for inline bots). On success, if edited message
+  is sent by the bot, the edited Message is returned,
+  otherwise True is returned.
+
+  [https://core.telegram.org/bots/api#editmessagetext]()
+  """
+  Simple.call [:edit, :message, :text],
+    RS.EditMessageText, A.Message
+
+  @doc """
+  Use this method to edit only the reply markup of messages sent by
+  the bot or via the bot (for inline bots). On success, if edited
+  message is sent by the bot, the edited Message is returned,
+  otherwise True is returned.
+
+  [https://core.telegram.org/bots/api#editmessagereplymarkup]()
+  """
+  Simple.call [:edit, :message, :reply, :markup],
+    RS.EditMessageReplyMarkup, A.Message
+
+  @doc """
   Images, voice, and so on all have file references, but the contents of such files
   are not embedded in API responses.
 
