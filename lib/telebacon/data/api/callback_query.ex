@@ -29,7 +29,7 @@ defmodule Telebacon.Data.API.CallbackQuery do
     val = PD.decode(map, as: %__MODULE__{})
     full_val = val
       |> H.from_map(:message, Message)
-      |> H.from_map(:user, User)
+      |> H.from_map(:from, User)
     full_val
   end
 
