@@ -193,6 +193,16 @@ defmodule Telebacon do
   Simple.call [:send, :contact], RS.SendContact, A.Message
 
   @doc """
+  se this method when you need to tell the user that something is
+  happening on the bot's side. The status is set for 5 seconds or
+  less (when a message arrives from your bot, Telegram clients clear
+  its typing status). Returns True on success.
+
+  [https://core.telegram.org/bots/api#sendchataction]()
+  """
+  Simple.call [:send, :chat, :action], RS.SendChatAction, :bool
+
+  @doc """
   For group chats, use this method to leave.
 
   [https://core.telegram.org/bots/api#leavechat]()
