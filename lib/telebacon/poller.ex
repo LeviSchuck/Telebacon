@@ -15,7 +15,7 @@ defmodule Telebacon.Poller do
     offset: 0,
     limit: 10,
     timeout: 300,
-    delay: 0,
+    delay_count: 0,
     max_delay: 60_000,
   ]
   @type t :: %Poller{}
