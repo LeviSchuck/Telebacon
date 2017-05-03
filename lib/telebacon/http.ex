@@ -85,10 +85,13 @@ defmodule Telebacon.HTTP do
     {ty, response} = post(url, payload, @headers, @options)
     case ty do
       :ok ->
-        res = Poison.decode!(response.body)
-        case Map.get(res, "ok", false) do
-          true -> {:ok, res}
-          _ -> {:failure, res}
+        case Poison.decode(response.body) do
+          {:ok, res} ->
+            case Map.get(res, "ok", false) do
+              true -> {:ok, res}
+              _ -> {:failure, res}
+            end
+          {:error, err} -> {:failure, err}
         end
       :error -> {:failure, response}
     end

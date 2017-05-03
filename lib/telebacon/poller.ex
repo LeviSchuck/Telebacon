@@ -14,7 +14,9 @@ defmodule Telebacon.Poller do
     payload: nil,
     offset: 0,
     limit: 10,
-    timeout: 300
+    timeout: 300,
+    delay: 0,
+    max_delay: 60_000,
   ]
   @type t :: %Poller{}
 
@@ -54,26 +56,61 @@ defmodule Telebacon.Poller do
       timeout: state.timeout
     }
     {ty, response} = get_updates(state.key, params)
-    noffset = handle_response(ty, response, state)
-    {:noreply, %{state | offset: noffset}}
+    nstate = handle_response(ty, response, state)
+    {:noreply, nstate}
   end
 
-  defp handle_response(:error, _, state) do
-    # Logger.debug "Got error? #{inspect response}"
+  @spec handle_info(:poll, Poller.t) :: {:noreply, Poller.t}
+  def handle_info(:poll, state) do
+    loop_poll()
+    {:noreply, state}
+  end
+
+  defp loop_poll() do
     GenServer.cast(self(), :poll)
-    state.offset
+  end
+  defp delayed_poll(state) do
+    delay = round(calc_delay(state))
+    Logger.debug("Delaying due to error #{delay}ms")
+    Process.send_after(self(), :poll, delay)
+  end
+  defp calc_delay(state) do
+    x = state.delay_count / 10
+    factor = (state.max_delay / (1 + :math.pow(2.71828, -x)))
+    factor
+  end
+  defp reset_delay(state) do
+    %{state | delay_count: 0}
+  end
+  defp inc_delay(state) do
+    %{state | delay_count: state.delay_count + 1}
+  end
+  defp set_offset(state, offset) do
+    %{state | offset: offset}
+  end
+
+  defp handle_response(:error, response, state) do
+    Logger.warn("Got error? #{inspect response}")
+    delayed_poll(state)
+    state
+      |> inc_delay()
   end
   defp handle_response(:ok, response, state) do
     # Logger.debug "Got response #{inspect response}"
-    _ = response |> Enum.filter(fn update ->
-      update.update_id > state.offset
-    end) |> Enum.map(fn update ->
-      params = [state.key, update, state.payload]
-      Task.async(state.behaviour, :chat_update, params)
-    end) |> Enum.map(&Task.await(&1))
-    GenServer.cast(self(), :poll)
+    response
+      |> Enum.filter(fn update ->
+        update.update_id > state.offset
+      end)
+      |> Enum.map(fn update ->
+        params = [state.key, update, state.payload]
+        Task.async(state.behaviour, :chat_update, params)
+      end)
+      |> Enum.each(&Task.await(&1))
+    loop_poll()
     noffset = Enum.reduce(response, state.offset, &max(&1.update_id, &2))
     # Logger.debug "Next Offset: #{noffset}"
-    noffset
+    state
+      |> reset_delay()
+      |> set_offset(noffset)
   end
 end
