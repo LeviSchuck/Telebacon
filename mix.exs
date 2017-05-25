@@ -32,10 +32,10 @@ defmodule Telebacon.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:httpoison, "~> 0.11.0"},
-     {:poison, "~> 3.1"},
-     {:gproc, "~> 0.5"},
-     {:temp, "~> 0.4"},
+    [{:httpoison, ">= 0.11.0"},
+     {:poison, ">= 2.0.0"},
+     {:gproc, ">= 0.5.0"},
+     {:temp, ">= 0.4.0"},
      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
      {:credo, "~> 0.5", only: [:dev, :test]},
      {:ex_doc, "~> 0.14", only: :dev}
