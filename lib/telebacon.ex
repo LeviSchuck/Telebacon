@@ -232,6 +232,14 @@ defmodule Telebacon do
     RS.EditMessageReplyMarkup, A.Message
 
   @doc """
+  Use this method to set the webhook url, which Telegram will post
+  Updates to.
+  [https://core.telegram.org/bots/api#setwebhook]()
+  """
+  Simple.call [:set, :webhook],
+    RQ.SetWebhook, :bool
+
+  @doc """
   Images, voice, and so on all have file references, but the contents of such files
   are not embedded in API responses.
 
