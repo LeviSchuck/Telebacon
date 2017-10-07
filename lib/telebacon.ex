@@ -240,6 +240,18 @@ defmodule Telebacon do
     RQ.SetWebhook, :bool
 
   @doc """
+  Deletes a webhook
+  https://core.telegram.org/bots/api#deletewebhook
+  """
+  Simple.call [:delete, :webhook], nil, :bool
+
+  @doc """
+  Gets info about an existing (or not) webhook
+  https://core.telegram.org/bots/api#getwebhookinfo
+  """
+  Simple.call [:get, :webhook, :info], nil, A.WebhookInfo
+
+  @doc """
   Images, voice, and so on all have file references, but the contents of such files
   are not embedded in API responses.
 
