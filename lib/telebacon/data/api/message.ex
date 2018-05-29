@@ -89,8 +89,8 @@ defmodule Telebacon.Data.API.Message do
   def from_map(map) do
     val = PD.decode(map, as: %__MODULE__{})
     full_val = val
-      |> H.from_map(:reply_to_message, Message)
-      |> H.from_map(:pinned_message, Message)
+      |> H.from_map(:reply_to_message, __MODULE__)
+      |> H.from_map(:pinned_message, __MODULE__)
       |> H.from_map(:from, User)
       |> H.from_map(:forward_from, User)
       |> H.from_map(:new_chat_member, User)
